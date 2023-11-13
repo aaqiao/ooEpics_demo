@@ -29,12 +29,11 @@
 #SNCSEQ = $(MODULES)/seq-ver
 
 # EPICS_BASE should appear last so earlier modules can override stuff:
-#EPICS_BASE=/home/aqiao/epics/base-7.0.7
-EPICS_BASE=/usr/local/epics/base-7.0.7
+EPICS_BASE=/home/aqiao/epics/base-7.0.7
 
 # modules used in this IOC
-OOEPICS=/afs/psi.ch/group/rf/Members/GZ84/ooEpics_development/ooEpics
-RVRF=/afs/psi.ch/group/rf/Members/GZ84/ooEpics_development/ooEpics_demo/module
+OOEPICS=/home/aqiao/code_pub/ooEpics
+RVRF=/home/aqiao/code_pub/ooEpics_demo/module
 
 # Set RULES here if you want to use build rules from somewhere
 # other than EPICS_BASE:

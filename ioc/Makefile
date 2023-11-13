@@ -29,3 +29,10 @@ iocBoot_DEPEND_DIRS += $(filter %App,$(DIRS))
 # Add any additional dependency rules here:
 
 include $(TOP)/configure/RULES_TOP
+
+# remove the created folder
+clean_all ::
+	rm -rf bin
+	rm -rf dbd
+	rm -rf lib
+

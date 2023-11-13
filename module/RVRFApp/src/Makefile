@@ -13,10 +13,7 @@ include $(TOP)/configure/CONFIG
 # build a support library
 #==================================================
 # library name
-LIBRARY_IOC += RVRF
-
-# DBD files
-#DBD += RVRF.dbd
+LIBRARY_IOC = RVRF
 
 # include files
 INC += Coordinator_Jobs.h

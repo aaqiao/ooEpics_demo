@@ -1,6 +1,6 @@
-#!../../bin/RHEL7-x86_64/testIoc
+#!../../bin/linux-x86_64/ioctest
 
-#- You may have to change testIoc to something else
+#- You may have to change ioctest to something else
 #- everywhere it appears in this file
 
 < envPaths
@@ -8,8 +8,8 @@
 cd "${TOP}"
 
 # Register all support components
-dbLoadDatabase "dbd/testIoc.dbd"
-testIoc_registerRecordDeviceDriver pdbbase
+dbLoadDatabase "dbd/ioctest.dbd"
+ioctest_registerRecordDeviceDriver pdbbase
 
 # define environment variables
 epicsEnvSet("MODULE_INST_NAME", "MODT")
