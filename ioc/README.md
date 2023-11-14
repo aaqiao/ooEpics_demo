@@ -1,7 +1,7 @@
 # Test IOC for RVRF Module
 This is an IOC project (`ioctest`) to run the `RVRF` module. The IOC is only an assembler of the modules (`RVRF` and `ooEpics`) and does not implement new functions. See the file `ioctestApp/src/Makefile` for details of how the modules are assembled. 
 
-Note: in the CPP file `ioctestApp/src/ioctestMain.cpp` that defines the entry point of the IOC executable, we have added the code below to define the global configuration object for the `RVRF` module. This is to overcome the problem of creating global object in the `module/RVRFApp/src/ModuleConfig_RVRF.cc`. A global configuration object should be created for every module designed with `ooEpics`.
+Note: in the CPP file `ioctestApp/src/ioctestMain.cpp` that defines the entry point of the IOC executable, we have added the code below to define the global configuration object for the `RVRF` module. This is to overcome the problem of creating global object in the `../module/RVRFApp/src/ModuleConfig_RVRF.cc` file. A global configuration object should be created for every module designed with `ooEpics`.
    ```
    #include "ModuleConfig_RVRF.h"
 
