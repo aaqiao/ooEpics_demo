@@ -36,8 +36,7 @@ public:
    ~Service_Example();
 
     // routines for configuration
-    void initRemotePVs         (OOEPICS::RemotePVList *ptr_rpvList);
-    void initChannelAccess     ();   
+    void initChannelAccess();   
 
     // service for external Jobs
     int  setRemoteDataPull     (epicsUInt16     boVal,              // set value to remote bo        record

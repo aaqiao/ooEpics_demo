@@ -4,6 +4,7 @@
 // Class implementation for the example service
 // Auto created from the template of ooEpics framework
 //=========================================================
+#include <cstdlib>
 #include "Service_Example.h"
 
 using namespace std;
@@ -12,7 +13,20 @@ using namespace std;
 // construction
 //-----------------------------------------------
 Service_Example::Service_Example(const char *moduleName, const char *serviceName) : 
-    OOEPICS::Service(moduleName, serviceName)
+    OOEPICS::Service(moduleName, serviceName),
+    rpv_setBO      (string("RPV-SET-BO")),				// here you need to set the remote PV names
+    rpv_setMBBO    (string("RPV-SET-MBBO")),
+    rpv_setLO      (string("RPV-SET-LO")),
+    rpv_setAO      (string("RPV-SET-AO")),
+    rpv_setWFO     (string("RPV-SET-WFO")),
+    rpv_setSO      (string("RPV-SET-SO")),
+    rpv_getBI      (string("RPV-MON-BI")),
+    rpv_getMBBI    (string("RPV-MON-MBBI")),
+    rpv_getLI      (string("RPV-GET-LI")),
+    rpv_getAI      (string("RPV-GET-AI")),
+    rpv_getWFIXaxis(string("RPV-MON-WFI-X")),
+    rpv_getWFI     (string("RPV-GET-WFI")),
+    rpv_getSI      (string("RPV-MON-SI"))
 {
     // init the locks
     var_lockCAMonitors = EPICSLIB_func_mutexMustCreate();
@@ -30,28 +44,6 @@ Service_Example::~Service_Example()
         EPICSLIB_func_mutexDestroy(var_lockCAMonitors);
 
     cout << "INFO:Service_Example: Object " << srvName << " deleted." << endl;
-}
-
-//-----------------------------------------------
-// init the remote PVs
-//-----------------------------------------------
-void Service_Example::initRemotePVs(OOEPICS::RemotePVList *ptr_rpvList)
-{
-    // init the remote PVs
-    rpv_setBO.init          (modName, srvName, "RPV-SET-BO",    ptr_rpvList);
-    rpv_setMBBO.init        (modName, srvName, "RPV-SET-MBBO",  ptr_rpvList);
-    rpv_setLO.init          (modName, srvName, "RPV-SET-LO",    ptr_rpvList);
-    rpv_setAO.init          (modName, srvName, "RPV-SET-AO",    ptr_rpvList);
-    rpv_setWFO.init         (modName, srvName, "RPV-SET-WFO",   ptr_rpvList);
-    rpv_setSO.init          (modName, srvName, "RPV-SET-SO",    ptr_rpvList);
-    
-    rpv_getBI.init          (modName, srvName, "RPV-MON-BI",    ptr_rpvList);
-    rpv_getMBBI.init        (modName, srvName, "RPV-MON-MBBI",  ptr_rpvList);
-    rpv_getLI.init          (modName, srvName, "RPV-GET-LI",    ptr_rpvList);
-    rpv_getAI.init          (modName, srvName, "RPV-GET-AI",    ptr_rpvList);
-    rpv_getWFIXaxis.init    (modName, srvName, "RPV-MON-WFI-X", ptr_rpvList);    
-    rpv_getWFI.init         (modName, srvName, "RPV-GET-WFI",   ptr_rpvList);
-    rpv_getSI.init          (modName, srvName, "RPV-MON-SI",    ptr_rpvList);
 }
 
 //-----------------------------------------------
@@ -93,6 +85,12 @@ int Service_Example::setRemoteDataPull (epicsUInt16     boVal,
                                         const char     *soStr,
                                         unsigned int    wfoPno)
 {
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // DEBUG (2023.11.14): emulate the data setting
+    return RVRF_RPVACCESS_SUCCESS;
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    
+    /////////// below are the nominal code //////////////////
     int status;
 
     // check the input
@@ -138,6 +136,16 @@ int Service_Example::getRemoteDataPull (epicsInt32     *liVal,
                                         epicsFloat64   *wfiVals,
                                         unsigned int    wfiPno)
 {
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // DEBUG (2023.11.14): emulate the data reading
+    *liVal 	= 12345;
+    *aiVal  = 5.2316;
+    for(int i = 0; i < wfiPno; i ++)
+        wfiVals[i] = rand();	
+	return RVRF_RPVACCESS_SUCCESS;
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    	
+    /////////// below are the nominal code //////////////////
     int status;
 
     // check the input
@@ -184,6 +192,24 @@ int Service_Example::getRemoteDataMonitor  (epicsUInt16    *biVal,
                                             char           *siStr,
                                             unsigned int    wfiPno)
 {
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    // DEBUG (2023.11.14): emulate the data reading
+    if(rand() > RAND_MAX/2) {
+        *biVal   = 0;
+        *mbbiVal = 5;
+    } else { 
+        *biVal   = 1;
+        *mbbiVal = 10;
+	}
+	
+	for(int i = 0; i < wfiPno; i ++)
+	    wfiXaxisVals[i] = (epicsFloat64)i;
+	
+	strcpy(siStr, "A test string...");
+	return RVRF_RPVACCESS_SUCCESS;
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	
+    /////////// below are the nominal code //////////////////
     // check the input
     if(!biVal || !mbbiVal || !wfiXaxisVals || !siStr || wfiPno <= 0)
         return RVRF_RPVACCESS_FAILED;

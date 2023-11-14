@@ -22,15 +22,8 @@ Module_RVRF::Module_RVRF(const char *moduleName, int priority) :
     var_msgLog          (moduleName)
 
 {
-    // init all variables
-    rpvMapFilePath.assign           ("");
-    rpvMapFileName.assign           ("");
-    rpvMapMacrosFileSpecific.assign ("");
-    rpvMapMacrosGeneral.assign      ("");
-
     // init the local and remote PVs in this top module
     initLocalPVs();
-    initRemotePVs();
 
     // init and show the FSMs
     var_fsm_Example.initFSM();
@@ -94,10 +87,6 @@ void Module_RVRF::initLocalPVs()
     lpv_cmd_jobExampleGet.init  (modn, devn, "CMD-JOBEXAM-GET", "", "", 1, (void *)this, lpvWcb_cmdJobExample, INTD_BO,   INTD_PASSIVE, NULL, NULL, NULL);
     lpv_cmd_fsmExample.init     (modn, devn, "CMD-FSMEXAM", fsmcmd, "", 1, (void *)this, lpvWcb_cmdFSMExample, INTD_MBBO, INTD_PASSIVE, NULL, NULL, NULL);
 
-    lpv_monRPVNum.init          (modn, devn, "MON-RPV-NUM",     "", "", 1, (void *)this, lpvRcb_monRPVCnts,    INTD_LI, INTD_10S,     NULL, NULL, NULL);
-    lpv_monRPVMappedNum.init    (modn, devn, "MON-RPV-NUM-MAP", "", "", 1, (void *)this, NULL,                 INTD_LI, INTD_10S,     NULL, NULL, NULL);
-    lpv_monRPVConnectedNum.init (modn, devn, "MON-RPV-NUM-CON", "", "", 1, (void *)this, NULL,                 INTD_LI, INTD_10S,     NULL, NULL, NULL);
-
     for(i = 0; i < MSGLOG_MAX_NUM; i ++) {
         strIdStream.str("");
         strIdStream << i;
@@ -121,50 +110,12 @@ void Module_RVRF::initLocalPVs()
 }
 
 //-----------------------------------------------
-// init remote PVs for all services in this module. the "rpvList" is passed
-// to each service object to build up a complete list of remote PVs
-//-----------------------------------------------
-void Module_RVRF::initRemotePVs()
-{
-    var_srv_Example.initRemotePVs(&rpvList);
-}
-
-//-----------------------------------------------
-// init the remote PV maps. this function can be executed multiple times, each
-// time a new file name should be assigned from the iocshell call
-//-----------------------------------------------
-void Module_RVRF::initRPVMaps()
-{
-    string fileName;
-
-    // get from file the mapping of remote PV names
-    fileName = rpvMapFilePath;
-    fileName += "/";
-    fileName += rpvMapFileName;
-
-    // fill the NamePair list and handle the file specific macros
-    rpvList.getPVNameList(fileName, rpvMapMacrosFileSpecific);  
-}
-
-//-----------------------------------------------
 // init CA in this module
 //-----------------------------------------------
 void Module_RVRF::initChannelAccess()
 {   
-    // maps the remote PV names and handle general macros and use the 
-    // NamePair to update PV names in RemotePV objects
-    rpvList.mapPVNodeNames(rpvMapMacrosGeneral);
-
     // connect the remote PVs in the services
     var_srv_Example.initChannelAccess();
-}
-
-//-----------------------------------------------
-// print the remote PV list
-//-----------------------------------------------
-void Module_RVRF::printRPVList(int sel)
-{
-    rpvList.prtPVNodeList(sel);
 }
 
 //-----------------------------------------------
@@ -216,16 +167,6 @@ void Module_RVRF::lpvRcb_getLogMsg(void *arg)
     }
 }
 
-// get the remote PV connection statistics
-void Module_RVRF::lpvRcb_monRPVCnts(void *arg)
-{
-    Module_RVRF *mod = (Module_RVRF *)arg; 
-    if(!mod)  return;
-
-    mod -> lpv_monRPVNum.setValue           (mod -> rpvList.getCntRemotePV());
-    mod -> lpv_monRPVMappedNum.setValue     (mod -> rpvList.getCntRemotePVMappend());
-    mod -> lpv_monRPVConnectedNum.setValue  (mod -> rpvList.getCntRemotePVConnected());
-}
 
 
 

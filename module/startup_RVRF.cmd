@@ -32,13 +32,9 @@ dbLoadRecords("/tmp/RVRF-$(MODULE_INST_NAME).db", "name_space=,module_name=$(MOD
 #---------------------------------------------------
 # Setup the modules
 #---------------------------------------------------
-# Set the file containing PV names to be connected with Channel Access
-# Parameters: Module_Name, Command_Set_RemotePV_Map_File, Folder, RemotePV_Map_File_Name, File_Specific_Macros
-#setModule("$(MODULE_INST_NAME)", "SET_RPVMAP_FILE", "$(RPVMAP_PATH)", "RPVMaps_RVRF.txt", "module_name=$(MODULE_INST_NAME)");
-
 # Connect the remote PVs with channel access
 # Parameters: Module_Name, Command_Connect_RemotePVs
-#setModule("$(MODULE_INST_NAME)", "CONN_RPV");
+setModule("$(MODULE_INST_NAME)", "CONN_RPV");
 
 # Init the module and start the thread
 # Parameters: Module_Name
