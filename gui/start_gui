@@ -1,0 +1,12 @@
+#!/bin/bash
+# start the panel
+
+caqtdm="/mnt/c/Program Files/caQTDM/bin/windows-x64/caQtDM.exe"
+ModuleName=MODT
+
+echo "Start panels for ooEpics example"
+declare -x EPICS_CA_ADDR_LIST="$EPICS_CA_ADDR_LIST localhost"
+
+"$caqtdm" -macro "name_space=,module_name=$ModuleName,gui_path=." GUI_Example_Top.ui &
+
+
