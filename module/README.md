@@ -7,7 +7,7 @@ This is an application module based on `ooEpics`. The module name is defined in 
 
 ## Code Compilation
 Follow the steps below to compile the `RVRF` code as a standard EPICS module.
-1. Edit the file `configure/RELEASE` to assign the absolute paths of EPICS base and ooEpics (change to your installation locations):
+1. Edit the file `configure/RELEASE` to assign the absolute paths of EPICS base and `ooEpics` (change to your installation locations):
    ```
    EPICS_BASE=/home/aqiao/epics/base-7.0.7
    OOEPICS=/home/aqiao/code_pub/ooEpics
