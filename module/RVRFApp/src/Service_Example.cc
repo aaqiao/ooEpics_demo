@@ -87,6 +87,18 @@ int Service_Example::setRemoteDataPull (epicsUInt16     boVal,
 {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     // DEBUG (2023.11.14): emulate the data setting
+    cout << "------ set data via remote PV -------" << endl;
+    cout << "boVal   = " << boVal << endl;
+    cout << "mbboVal = " << mbboVal << endl;
+    cout << "loVal   = " << loVal << endl;
+    cout << "aoVal   = " << aoVal << endl;
+    cout << "soStr   = " << soStr << endl;
+    cout << "wfoVals = " << endl;
+    for (int i = 0; i < (int)wfoPno; i ++) {
+        cout << wfoVals[i] << ", ";
+    }
+    cout << endl;
+    
     return RVRF_RPVACCESS_SUCCESS;
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     
@@ -140,8 +152,9 @@ int Service_Example::getRemoteDataPull (epicsInt32     *liVal,
     // DEBUG (2023.11.14): emulate the data reading
     *liVal 	= 12345;
     *aiVal  = 5.2316;
-    for(int i = 0; i < wfiPno; i ++)
+    for(int i = 0; i < (int)wfiPno; i ++) {
         wfiVals[i] = rand();	
+    }
 	return RVRF_RPVACCESS_SUCCESS;
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     	
@@ -202,8 +215,9 @@ int Service_Example::getRemoteDataMonitor  (epicsUInt16    *biVal,
         *mbbiVal = 10;
 	}
 	
-	for(int i = 0; i < wfiPno; i ++)
+	for(int i = 0; i < (int)wfiPno; i ++) {
 	    wfiXaxisVals[i] = (epicsFloat64)i;
+	}
 	
 	strcpy(siStr, "A test string...");
 	return RVRF_RPVACCESS_SUCCESS;

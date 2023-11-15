@@ -11,9 +11,9 @@ using namespace std;
 
 //-----------------------------------------------
 // global objects and variables
-// finding (2023.11.13): global variable cannot be created, now create the global
+// finding (2023.11.13): global variable may not be created, now create the global
 //                       module configuration object for each module in the main 
-//                       file of the IOC
+//                       CPP file of the IOC
 //-----------------------------------------------
 //static ModuleConfig_RVRF gobj_ModuleConfig_RVRF;
 

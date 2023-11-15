@@ -12,8 +12,10 @@
 
 #include "ModuleConfig_RVRF.h"
 
+// create the global object of each module's configuration class
 ModuleConfig_RVRF gobj_ModuleConfig_RVRF;
 
+// entry point of the IOC process
 int main(int argc,char *argv[])
 {
     if(argc>=2) {    

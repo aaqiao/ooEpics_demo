@@ -135,7 +135,7 @@ void Job_Example::enableJobExt()
 //-----------------------------------------------
 int Job_Example::execute(int flag)
 {
-    int i;
+    //int i;
     int status = RVRF_RPVACCESS_FAILED;
 
     // get the parameter settings from OPVs
@@ -208,14 +208,14 @@ int Job_Example::execute(int flag)
                 lpv_waveforminExample.setValues (buf_wfi, SRVEXAM_BUF_SIZE);
 
                 // display the data for debugging
-                cout << "Data pulling read with CA:" << endl;
-                cout << " LI: " << longinExample << endl;
-                cout << " AI: " << aiExample << endl;
-                cout << " WFI: ";
+                //cout << "Data pulling read with CA:" << endl;
+                //cout << " LI: " << longinExample << endl;
+                //cout << " AI: " << aiExample << endl;
+                //cout << " WFI: ";
 
-                for(i = 0; i < SRVEXAM_BUF_SIZE; i ++)
-                    cout << buf_wfi[i] << " ";
-                cout << endl;
+                //for(i = 0; i < SRVEXAM_BUF_SIZE; i ++)
+                //    cout << buf_wfi[i] << " ";
+                //cout << endl;
 
             } else {
                 postMsg(ptr_msgLog, enableDebug, RVRF_MSG_ERR, "Failed to get remote data by pulling!");
@@ -236,15 +236,15 @@ int Job_Example::execute(int flag)
                 lpv_stringinExample.setString   (stringinExample);
 
                 // display the data for debugging
-                cout << "Data monitoring read with CA:" << endl;
-                cout << " BI:   " << biExample << endl;
-                cout << " MBBI: " << mbbiExample << endl;
-                cout << " SI:   " << stringinExample << endl;
-                cout << " WFX: ";
+                //cout << "Data monitoring read with CA:" << endl;
+                //cout << " BI:   " << biExample << endl;
+                //cout << " MBBI: " << mbbiExample << endl;
+                //cout << " SI:   " << stringinExample << endl;
+                //cout << " WFX: ";
 
-                for(i = 0; i < SRVEXAM_BUF_SIZE; i ++)
-                    cout << buf_wfx[i] << " ";
-                cout << endl;
+                //for(i = 0; i < SRVEXAM_BUF_SIZE; i ++)
+                //    cout << buf_wfx[i] << " ";
+                //cout << endl;
 
             } else {
                 postMsg(ptr_msgLog, enableDebug, RVRF_MSG_ERR, "Failed to get remote data by monitoring!");
