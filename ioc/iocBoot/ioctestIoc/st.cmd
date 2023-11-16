@@ -16,10 +16,10 @@ epicsEnvSet("MODULE_INST_NAME", "MODT")
 epicsEnvSet("THREAD_PRIORITY", "10")
 
 # execute the module script
+cd "${TOP}/iocBoot/${IOC}"
 < $(RVRF)/startup_RVRF.cmd
 
 # start the IOC
-cd "${TOP}/iocBoot/${IOC}"
 iocInit
 
 
